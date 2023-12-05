@@ -1,15 +1,19 @@
-// Prevents additional console window on Windows in release, DO NOT REMOVE!!
-#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+#![cfg_attr(
+    all(not(debug_assertions), target_os = "windows"),
+    windows_subsystem = "windows"
+)]
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
+use tauri::{Builder, Window, AppHandle, Manager};
+
 #[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
+fn navigate_to(app: AppHandle, url: String) {
+    let window = app.get_window("main").unwrap();
+    window.eval(&format!("window.location.href = '{}'", url)).expect("Failed to navigate");
 }
 
 fn main() {
-    tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet])
+    Builder::default()
+        .invoke_handler(tauri::generate_handler![navigate_to])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
