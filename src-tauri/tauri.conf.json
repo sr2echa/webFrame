@@ -6,8 +6,8 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "webframe",
-    "version": "0.0.0"
+    "productName": "webFrame",
+    "version": "0.0.1"
   },
   "tauri": {
     "allowlist": {
@@ -22,6 +22,9 @@
           "unminimize": true,
           "startDragging": true
         },
+        "os": {
+          "all": true
+        },
       "all": true,
       "shell": {
         "all": false,
@@ -33,9 +36,8 @@
       "targets": "all",
       "identifier": "com.tauri.dev",
       "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
+        "icons/516x516.png",
+        "icons/icon.png",
         "icons/icon.icns",
         "icons/icon.ico"
       ]
@@ -50,7 +52,7 @@
         "transparent": true,
         "fullscreen": false,
         "resizable": true,
-        "title": "webframe",
+        "title": "webFrame",
         "width": 800,
         "height": 600
       }
