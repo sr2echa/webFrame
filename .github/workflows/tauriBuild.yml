@@ -37,15 +37,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev
 
-      # - name: Install dependencies (macOS)
-      #   if: matrix.platform == 'macos-latest'
-      #   run: |
-      #     # Specify macOS dependencies here
+      - name: Install dependencies (macOS)
+        if: matrix.platform == 'macos-latest'
+        run: |
+          # Specify macOS dependencies here
 
-      # - name: Install dependencies (Windows)
-      #   if: matrix.platform == 'windows-latest'
-      #   run: |
-      #     # Specify Windows dependencies here
+      - name: Install dependencies (Windows)
+        if: matrix.platform == 'windows-latest'
+        run: |
+          # Specify Windows dependencies here
 
       - name: Cache Rust dependencies
         uses: actions/cache@v2
@@ -55,6 +55,9 @@ jobs:
             ~/.cargo/git
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install Tauri CLI
+        run: yarn add @tauri-apps/cli
 
       - name: Build project
         run: yarn tauri build --target all
