@@ -39,6 +39,8 @@ jobs:
         run: yarn install
       - name: Build project
         run: yarn tauri build --target all
+      - name: List Artifacts
+        run: ls -R src-tauri/target/release/bundle/
       - name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
@@ -53,3 +55,4 @@ jobs:
           draft: true
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
+
