@@ -41,7 +41,6 @@ jobs:
         run: yarn tauri build --target all
       - name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             src-tauri/target/release/bundle/**/*.AppImage
@@ -52,5 +51,5 @@ jobs:
             src-tauri/target/release/bundle/**/*.dmg
             src-tauri/target/release/bundle/**/*.pkg
           draft: true
-          prerelease: true
+          prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
