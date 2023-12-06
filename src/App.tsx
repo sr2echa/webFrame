@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { invoke } from '@tauri-apps/api/tauri';
+import { type } from '@tauri-apps/api/os';
 import './App.css';
 import UrlBar from './components/UrlBar';
 import logo from './assets/logo.png';
 
 const App: React.FC = () => {
   const [showUrlBar, setShowUrlBar] = useState(false);
+  const [osType, setOsType] = useState('');
 
   useEffect(() => {
+    type().then(setOsType); // Get the OS type
+
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.altKey && event.key.toLowerCase() === 'k') {
+      if ((osType === 'Darwin' ? event.metaKey : event.altKey) && event.key.toLowerCase() === 'k') {
         event.preventDefault();
         setShowUrlBar(true);
       }
@@ -20,10 +24,10 @@ const App: React.FC = () => {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [osType]);
 
   const navigateToUrl = (url: string) => {
-    invoke('navigate_to', { url }); // Use the 'navigate_to' command with the URL
+    invoke('navigate_to', { url });
     setShowUrlBar(false);
   };
 
@@ -40,9 +44,9 @@ const App: React.FC = () => {
           <img src={logo} className="logo" alt="logo" />
           <div className="shortcut-hints">
             <div className="shortcut">Go to Website <span className="key">Alt + K</span></div>
-            <div className="shortcut">Close Webframe <span className="key">Alt + F4</span></div>
-            <div className="shortcut">Navigate Back <span className="key">Ctrl + Shift + [</span></div>
-            <div className="shortcut">Navigate Forward <span className="key">Ctrl + Shift + ]</span></div>
+            <div className="shortcut">Close Webframe <span className="key">{osType === 'Darwin' ? '⌘ + W' : 'Alt + F4'}</span></div>
+            {/* <div className="shortcut">Navigate Back <span className="key">Ctrl + Shift + [</span></div>
+            <div className="shortcut">Navigate Forward <span className="key">Ctrl + Shift + ]</span></div> */} {/* TODO: Not yet implemented */}
           </div>
         </div>
       </div>
