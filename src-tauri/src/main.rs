@@ -6,10 +6,19 @@
 use tauri::{Builder, Window, AppHandle, Manager};
 
 #[tauri::command]
+// fn navigate_to(app: AppHandle, url: String) {
+//     let window = app.get_window("main").unwrap();
+//     window.eval(&format!("window.location.href = '{}'", url)).expect("Failed to navigate");
+// }
+
 fn navigate_to(app: AppHandle, url: String) {
-    let window = app.get_window("main").unwrap();
-    window.eval(&format!("window.location.href = '{}'", url)).expect("Failed to navigate");
+    if let Some(window) = app.get_window("main") {
+        window.eval(&format!("window.location.href = '{}'", url)).expect("Failed to navigate");
+    } else {
+        eprintln!("Main window not found");
+    }
 }
+
 
 fn main() {
     Builder::default()
