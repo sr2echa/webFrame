@@ -40,7 +40,7 @@ You can do that by either:
 
 ### Known Bugs
 - <kbd>Alt</kbd> + <kbd>K</kbd> does not work once you navigate to a webpage (works only in the newTab)
-- Cross platform implementation for <kbd>Alt</kbd> + <kbd>F4</kbd> (close webFrame) has not been implemented
+- ~~Cross platform implementation for <kbd>Alt</kbd> + <kbd>F4</kbd> (close webFrame) has not been implemented~~ added map for default sys quit shortcut (all platforms)... so ig its done 
 - `Forward` and <code>Backward</code> functionalities have not been implemented
 - Tauri window is not rounded
 
