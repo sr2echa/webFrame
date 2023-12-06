@@ -39,6 +39,8 @@ jobs:
         run: yarn install
       - name: Build project
         run: yarn tauri build --target all
+        env:
+          RUST_BACKTRACE: 1
       - name: List Artifacts
         run: ls -R src-tauri/target/release/bundle/
       - name: Publish to GitHub Releases
