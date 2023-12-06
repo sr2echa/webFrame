@@ -19,7 +19,6 @@ fn navigate_to(app: AppHandle, url: String) {
     }
 }
 
-
 fn main() {
     Builder::default()
         .invoke_handler(tauri::generate_handler![navigate_to])
