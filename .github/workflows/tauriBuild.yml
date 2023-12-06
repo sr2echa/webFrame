@@ -23,25 +23,30 @@ jobs:
         with:
           node-version: '20'
 
-      # Tauri Action Setup
       - name: Setup Tauri Action
         uses: tauri-apps/tauri-action@v0
         with:
-          node-version: '20'
-      
-      - name: install Rust stable
+          projectPath: './' # specify the path to your project if it's not in the repository root
+
+      - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
 
-      - name: install dependencies (ubuntu only)
-        if: matrix.platform == 'ubuntu-20.04'
+      - name: Install dependencies (Ubuntu)
+        if: matrix.platform == 'ubuntu-latest'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev
 
-      - name: install frontend dependencies
-        run: yarn install 
+      # - name: Install dependencies (macOS)
+      #   if: matrix.platform == 'macos-latest'
+      #   run: |
+      #     # Specify macOS dependencies here
 
-      # Cache Rust dependencies
+      # - name: Install dependencies (Windows)
+      #   if: matrix.platform == 'windows-latest'
+      #   run: |
+      #     # Specify Windows dependencies here
+
       - name: Cache Rust dependencies
         uses: actions/cache@v2
         with:
@@ -51,21 +56,14 @@ jobs:
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
-      # Install dependencies
-      - name: Install dependencies
-        run: yarn install
-
-      # Build project
       - name: Build project
         run: yarn tauri build --target all
         env:
           RUST_BACKTRACE: full
 
-      # List Artifacts
       - name: List Artifacts
         run: ls -R src-tauri/target/release/bundle/
 
-      # Publish to GitHub Releases
       - name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
