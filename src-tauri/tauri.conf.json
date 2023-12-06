@@ -34,7 +34,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.tauri.dev",
+      "identifier": "io.sreecha.webframe",
       "icon": [
         "icons/516x516.png",
         "icons/icon.png",
